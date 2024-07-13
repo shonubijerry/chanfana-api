@@ -1,15 +1,12 @@
-import { fromHono } from "chanfana";
-import { Hono } from "hono";
+import { fromIttyRouter } from "chanfana";
 import { TaskCreate } from "./endpoints/taskCreate";
 import { TaskDelete } from "./endpoints/taskDelete";
 import { TaskFetch } from "./endpoints/taskFetch";
 import { TaskList } from "./endpoints/taskList";
-
-// Start a Hono app
-const app = new Hono();
+import { Router } from "itty-router";
 
 // Setup OpenAPI registry
-const openapi = fromHono(app, {
+const openapi = fromIttyRouter(Router(), {
 	docs_url: "/",
 });
 
@@ -20,4 +17,4 @@ openapi.get("/api/tasks/:taskSlug", TaskFetch);
 openapi.delete("/api/tasks/:taskSlug", TaskDelete);
 
 // Export the Hono app
-export default app;
+export default openapi;
